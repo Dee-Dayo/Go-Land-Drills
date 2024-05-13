@@ -15,6 +15,10 @@ var(
 	totalPerUnit []float64
 	discount float64
 	currentDate = time.Now()
+	subTotal float64
+	discountPrice float64
+	vat float64
+	billTotal float64
 )
 
 func main(){
@@ -60,6 +64,29 @@ func main(){
 func invoice(){
 	fmt.Printf("SEMICOLON STORES\nMAIN BRANCH\nLOCATION: 312, HERBERT MACAULAY WAY, SABO YABA LAGOS.\nTEL: 03293828343\nDate: %s\nCashier: %s\nCustomer Name: %s\n", currentDate.Format("02-01-2006"), cashierName, customerName)
 	fmt.Println("========================================================")
-	fmt.Println("ITEM\tQTY\tPRICE\tTOTAL(NGN)")
-	fmt.Println("=========================================")
+	fmt.Println("ITEM\t\tQTY\tPRICE\t\tTOTAL(NGN)")
+	fmt.Println("========================================================")
+	for index := 0; index < len(itemsBought); index++ {
+		fmt.Printf("%s\t\t%d\t%.2f\t\t%.2f\n", itemsBought[index], piecesBought[index], pricePerUnit[index], totalPerUnit[index])
+	}
+	fmt.Println("========================================================")
+	
+	for index := 0; index < len(totalPerUnit); index++ {
+		subTotal += totalPerUnit[index]
+	}
+	fmt.Printf("\t\t\tSub total: %.2f\t\n", subTotal)
+	
+	discountPrice = (discount / 100) * subTotal
+	fmt.Printf("\t\t\tDiscount: %.2f\t\n", discountPrice)
+
+	vat = (17.50 / 100) * subTotal
+	fmt.Printf("\t\t\tVAT: %.2f\t\n", vat)
+
+	fmt.Println("========================================================")
+
+	billTotal = subTotal - discountPrice + vat
+	fmt.Printf("\t\t\tBill Total: %.2f\t\n", billTotal)
+	fmt.Println("========================================================")
+	fmt.Printf("THIS IS NOT A RECEIPT KINDLY PAY  %.2f\n", billTotal)
+	fmt.Println("========================================================")
 }
